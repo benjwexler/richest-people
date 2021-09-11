@@ -103,7 +103,7 @@ const InnerApp = ({ count, setCount }) => {
   const offsetCoords = [0, -60, -50];
 
   const endPositionPart1 = [0, -1100, -350];
-  
+
   // const durationSpring1 = 500;
   const durationSpring1 = 600;
 
@@ -209,7 +209,7 @@ const InnerApp = ({ count, setCount }) => {
   const cards = names;
 
   const originCoords = [0, 0, 0];
-  
+
 
 
 
@@ -232,24 +232,50 @@ const InnerApp = ({ count, setCount }) => {
       const isLastCard = index === cards.length - 1;
       return ({
         from: {
-          opacity: 0,
-          position: count === 0 ? [0, 0, 0] : originCoords.map((coord, j) => coord + (offsetCoords[j] * i)),
+          opacity: 1,
+          position: originCoords.map((coord, j) => coord + (offsetCoords[j] * i)),
           rotation: [degrees_to_radians(-70), 0, 0],
           index,
         },
-        opacity: index === 0 ? 1 : 0.2,
-        position: originCoords.map((coord, j) => {
-          // const offset = (j === 1 && index === cards.length - 1 ? 320 : 0);
-          const offset = 0;
+        to: [
+          {position: [0, 0, 0]},
+          {
+            opacity: index === 0 ? 1 : 1.2,
+            position: originCoords.map((coord, j) => {
 
-          return offset + coord + (offsetCoords[j] * index)
-        }),
-        // rotation: index === cards.length - 1 ? [degrees_to_radians(-160), 0, 0] : [degrees_to_radians(-70), 0, 0],
-        rotation: [degrees_to_radians(-70), 0, 0],
-        index,
+              // if(isLastCard || true) {
+              //   return [10, 10, 10]
+              // }
+              // const offset = (j === 1 && index === cards.length - 1 ? 320 : 0);
+              const offset = 0;
+
+              return offset + coord + (offsetCoords[j] * index)
+            }),
+            // rotation: index === cards.length - 1 ? [degrees_to_radians(-160), 0, 0] : [degrees_to_radians(-70), 0, 0],
+            // rotation: [degrees_to_radians(-70), 0, 0],
+            index,
+          },
+          {
+            // opacity: 1,
+            position: [0, -100, 100],
+          },
+          {
+            // opacity: 1,
+            position: endPositionPart1,
+            // rotation: [degrees_to_radians(-150), 0, 0],
+          },
+          {
+            // opacity: 1,
+            position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 9)),
+        // rotation: [degrees_to_radians(-70), 0, 0],
+          }
+        ]
+        .slice(0, false ? cards.length : 2)
+        ,
+
         config: {
-          duration: isLastCard ? 1200 : 800,
-          easing: isLastCard ? d3.easeBackOut.overshoot(2) : d3.easeQuadInOut,
+          // duration: isLastCard ? 2200 : 800,
+          // easing: isLastCard ? d3.easeBackOut.overshoot(2) : d3.easeQuadInOut,
         },
 
       })
@@ -261,15 +287,21 @@ const InnerApp = ({ count, setCount }) => {
     return (
       springs.map((spring, i) => {
         const { position, opacity, index } = spring;
-        console.log('spring', spring)
-        console.log('index', index)
+        console.log('position', position)
+        // console.log('spring', spring)
+        // console.log('index', index)
 
         // if(index.animation.from === 9) return null;
         // console.log('opacity', opacity)
         return (
           <Box
             key={i}
-            rotation={spring.rotation} myRef={ref} position={position} dimensions={dimensions}>
+            rotation={spring.rotation}
+            myRef={ref}
+            position={position
+              // .to(o => o)
+            }
+            dimensions={dimensions}>
             <Html
 
 
