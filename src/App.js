@@ -237,7 +237,7 @@ const InnerApp = ({ count, setCount }) => {
           rotation: [degrees_to_radians(-70), 0, 0],
           index,
         },
-        opacity: isLastCard ? 0 : index === 0 ? 1 : 0.2,
+        opacity: index === 0 ? 1 : 0.2,
         position: originCoords.map((coord, j) => {
           // const offset = (j === 1 && index === cards.length - 1 ? 320 : 0);
           const offset = 0;
@@ -248,7 +248,7 @@ const InnerApp = ({ count, setCount }) => {
         rotation: [degrees_to_radians(-70), 0, 0],
         index,
         config: {
-          duration: index === 9 ? 0 : isLastCard ? 1200 : 800,
+          duration: isLastCard ? 1200 : 800,
           easing: isLastCard ? d3.easeBackOut.overshoot(2) : d3.easeQuadInOut,
         },
 
@@ -264,7 +264,7 @@ const InnerApp = ({ count, setCount }) => {
         console.log('spring', spring)
         console.log('index', index)
 
-        if(index.animation.from === 9) return null;
+        // if(index.animation.from === 9) return null;
         // console.log('opacity', opacity)
         return (
           <Box
@@ -325,7 +325,7 @@ const InnerApp = ({ count, setCount }) => {
       >
 
         {createCards(10, [0, 0, 0], [0, -60, -50])}
-        <Box
+        {/* <Box
           // key={i}
           rotation={rotation} position={position} dimensions={dimensions}>
           <Html
@@ -346,7 +346,7 @@ const InnerApp = ({ count, setCount }) => {
 
               opacity={1} />
           </Html>
-        </Box>
+        </Box> */}
 
       </group>
       {/* </Center> */}
