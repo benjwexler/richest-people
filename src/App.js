@@ -456,10 +456,11 @@ function App() {
       <h1 className="page-title">
         <div 
         // style={{marginBottom: 50}}
-        >Top 10 Richest People</div>
+        ><span style={{color: '#1ea394'}}>Top</span> 10 Richest People</div>
         <div
            style={{marginBottom: 50, fontSize: 30}}
-        >Reimagined by Ben Wexler</div>
+        >
+        <span style={{colorz: '#1ea394'}}>Reimagined</span> by <span style={{color: '#1ea394'}}>Ben Wexler</span></div>
         {/* <div> By Ben Wexler </div> */}
 
 
