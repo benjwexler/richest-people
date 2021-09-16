@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom'
 import React, { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useSpring, animated as a } from '@react-spring/three'
+import * as THREE from 'three'
 
 export function degrees_to_radians(degrees) {
   var pi = Math.PI;
@@ -29,7 +30,7 @@ export default function Box(props) {
       onPointerOver={(event) => setHover(true)}
       onPointerOut={(event) => setHover(false)}>
       <boxGeometry args={dimensions} />
-      <meshStandardMaterial color={color || 'green'} />
+      <meshStandardMaterial color={color || 'blue'} side={THREE.DoubleSide}/>
       {children}
     </a.mesh>
   )
