@@ -102,7 +102,7 @@ const InnerApp = ({ count, setCount }) => {
   const [activeSpring, setActiveSpring] = useState(1);
   const offsetCoords = [0, -60, -50];
 
-  const endPositionPart1 = [0, -1100, -350];
+  const endPositionPart1 = [0, -1000, -350];
 
   // const durationSpring1 = 500;
   const durationSpring1 = 600;
@@ -238,14 +238,13 @@ const InnerApp = ({ count, setCount }) => {
           index,
         },
         to: [
-          {position: [0, 0, 0]},
+          // {position: [0, 0, 0]},
           {
-            opacity: index === 0 ? 1 : 1.2,
-            position: originCoords.map((coord, j) => {
+            rotation: [degrees_to_radians(isLastCard ? -100 : -70), 0, 0],
+            opacity: index === 0 ? 1 : 0.2,
+            position: isLastCard ? [0, -60, 50] : originCoords.map((coord, j) => {
 
-              // if(isLastCard || true) {
-              //   return [10, 10, 10]
-              // }
+
               // const offset = (j === 1 && index === cards.length - 1 ? 320 : 0);
               const offset = 0;
 
@@ -255,27 +254,28 @@ const InnerApp = ({ count, setCount }) => {
             // rotation: [degrees_to_radians(-70), 0, 0],
             index,
           },
+          // {
+          //   rotation: [degrees_to_radians(-150), 0, 0],
+          //   // opacity: 1,
+          //   position: [0, -120, 100],
+          // },
           {
-            // opacity: 1,
-            position: [0, -100, 100],
-          },
-          {
-            // opacity: 1,
+            opacity: 0,
             position: endPositionPart1,
-            // rotation: [degrees_to_radians(-150), 0, 0],
+            rotation: [degrees_to_radians(-150), 0, 0],
           },
           {
-            // opacity: 1,
+            opacity: .2,
             position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 9)),
-        // rotation: [degrees_to_radians(-70), 0, 0],
+            rotation: [degrees_to_radians(-70), 0, 0],
           }
         ]
-        .slice(0, false ? cards.length : 2)
+          .slice(0, isLastCard ? cards.length : 1)
         ,
 
         config: {
-          // duration: isLastCard ? 2200 : 800,
-          // easing: isLastCard ? d3.easeBackOut.overshoot(2) : d3.easeQuadInOut,
+          duration: isLastCard ? 600 : 800,
+          easing: isLastCard ? d3.easeBackOut.overshoot(1) : d3.easeQuadInOut,
         },
 
       })
@@ -287,12 +287,7 @@ const InnerApp = ({ count, setCount }) => {
     return (
       springs.map((spring, i) => {
         const { position, opacity, index } = spring;
-        console.log('position', position)
-        // console.log('spring', spring)
-        // console.log('index', index)
 
-        // if(index.animation.from === 9) return null;
-        // console.log('opacity', opacity)
         return (
           <Box
             key={i}
@@ -313,10 +308,10 @@ const InnerApp = ({ count, setCount }) => {
                 index
                 name={cards[i].name}
                 imgSrc={cards[i].imgSrc}
-                onClick={() => setCount(prevVal => {
-                  const newVal = prevVal + 1;
-                  return newVal >= cards.length ? 0 : newVal
-                })}
+                // onClick={() => setCount(prevVal => {
+                //   const newVal = prevVal + 1;
+                //   return newVal >= cards.length ? 0 : newVal
+                // })}
 
                 opacity={opacity} />
             </Html>
@@ -346,17 +341,18 @@ const InnerApp = ({ count, setCount }) => {
 
 
     <>
-      <OrbitControls />
+      {/* <OrbitControls /> */}
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       {/* <Center alignTop> */}
       {/* <gridHelper args={[1000, 1000, `white`, `gray`]} /> */}
       <group
         // position={[-60, 150, 50]}
-        position={[0, 150, 50]}
+        // position={[0, 200, 50]}
+        position={[0, 180, 50]}
       >
 
-        {createCards(10, [0, 0, 0], [0, -60, -50])}
+        {createCards(10, [0, -520, -100], [0, -60, -50])}
         {/* <Box
           // key={i}
           rotation={rotation} position={position} dimensions={dimensions}>
@@ -389,7 +385,8 @@ const InnerApp = ({ count, setCount }) => {
 
 function App() {
   // const [cameraPosition, setCameraPosition] = useState([-60, 450, 180])
-  const [cameraPosition, setCameraPosition] = useState([-60, 450, 180])
+  const [cameraPosition, setCameraPosition] = useState([-60, 480, 180])
+  // const [cameraPosition, setCameraPosition] = useState([-60, 550, 180])
   const cameraRef = useRef();
 
   const [count, setCount] = useState(0);
@@ -402,6 +399,7 @@ function App() {
   const handleResize = () => {
     // return;
     setTimeout(() => {
+      return;
       console.log('count', count)
       const dimensions = document.querySelectorAll('.content')[countRef.current] ?.getBoundingClientRect();
       // const dimensionsLast = document.querySelectorAll('.content')[9]?.getBoundingClientRect();
@@ -431,9 +429,125 @@ function App() {
 
   return (
     <div className="App" style={{ height: '100vh', display: 'flex', transform: 'scale(1.0)' }}>
-      <h1
+      <div style={{ display: 'none' }} className="info-container">
+        {/* <div className="background"></div> */}
+        <h2 className="position-heading">CEO and Founder, Amazon</h2>
+        <ul className="list-info">
+          <li>
+            Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
+      </li>
+          <li>
+            Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
+      </li>
+          <li>
+            Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
+      </li>
+          <li>
+            Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
+      </li>
+          {/* <li>
+      Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
+      </li>
+      <li>
+      Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
+      </li> */}
+        </ul>
+      </div>
+      <h1 className="page-title">
+        <div 
+        // style={{marginBottom: 50}}
+        >Top 10 Richest People</div>
+        <div
+           style={{marginBottom: 50, fontSize: 30}}
+        >Reimagined by Ben Wexler</div>
+        {/* <div> By Ben Wexler </div> */}
+
+
+
+        <div style={{ display: 'flex' }} className="heading-rank2">
+
+
+
+
+          {/* <div> */}
+          <div className="d-flex">
+            <div className="previous" onClick={() => setCount(prevVal => {
+              const newVal = prevVal - 1;
+              return newVal < 0 ? 9 : newVal
+            })}>
+              <i className="fas fa-arrow-left icon-previous"></i>
+            </div>
+
+            <h1
+            className="rankNum"
+              style={{ margin: 0, minWidth: 90 }}
+            >{count + 1}
+
+            </h1>
+            <div className="m-auto next-prev-text" />
+          </div>
+
+
+
+          <div className="d-flex">
+            <div className="m-auto next-prev-text">
+            </div>
+            <div className="next" onClick={() => setCount(prevVal => {
+              const newVal = prevVal + 1;
+              return newVal >= 10 ? 0 : newVal
+            })}>
+
+              <i className="fas fa-arrow-right icon-next"></i>
+            </div>
+          </div>
+
+        </div>
+
+
+      </h1>
+      {/* <h1
+      className="heading-rank"
         // style={{left: rankCoords.left, top: rankCoords.top}}
-        className="heading-rank">#{count + 1}</h1>
+        >#{count + 1}
+        
+        </h1> */}
+      <div style={{ display: 'none', }} className="heading-rank2">
+
+
+
+
+        {/* <div> */}
+        <div className="d-flex">
+          <div className="previous" onClick={() => setCount(prevVal => {
+            const newVal = prevVal - 1;
+            return newVal < 0 ? 9 : newVal
+          })}>
+            <i className="fas fa-arrow-left icon-previous"></i>
+          </div>
+
+          <h1
+            style={{ margin: 0, minWidth: 90 }}
+          >{count + 1}
+
+          </h1>
+          <div className="m-auto next-prev-text" />
+        </div>
+
+
+
+        <div className="d-flex">
+          <div className="m-auto next-prev-text">
+          </div>
+          <div className="next" onClick={() => setCount(prevVal => {
+            const newVal = prevVal + 1;
+            return newVal >= 10 ? 0 : newVal
+          })}>
+
+            <i className="fas fa-arrow-right icon-next"></i>
+          </div>
+        </div>
+
+      </div>
       <Canvas
         ref={cameraRef}
         // camera={{ position: [-5, 450, 240], fov: 45, }}
@@ -441,19 +555,7 @@ function App() {
       >
         <InnerApp {...innerAppProps} />
       </Canvas>
-      <div style={{ position: 'absolute', bottom: 5, right: 5 }}>
-        <div>X: <input type="number" value={cameraPosition[0]}
-          onChange={(ev) => setCameraPosition((prevVal) => {
-            const newPosition = [...prevVal]
-            newPosition[0] = parseFloat(ev.target.value);
-            console.log('newPosition', newPosition)
-            return newPosition
-          })}
-        />
-        </div>
-        <div>X: <input type="number" /></div>
-        <div>X: <input type="number" /></div>
-      </div>
+
     </div>
   );
 }
