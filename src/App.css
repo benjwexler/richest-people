@@ -1,6 +1,7 @@
 
 body {
   background: black;
+  overflow: hidden;
 }
 
 * {
@@ -10,6 +11,8 @@ body {
 .App {
   text-align: center;
 }
+
+
 
 .App-logo {
   height: 40vmin;
@@ -217,19 +220,19 @@ transform: scale(1) rotateY(
   font-size: 8px;
   overflow: auto;
   transform: translateX(-75%);
+  transform: translateX(-150%) scale(2);
+  /* transform: translateX(0) !important;
+  transform: translate3d(-75%, 0, 0) !important; */
+  /* -moz-osx-font-smoothing: grayscale; */
+  -moz-osx-font-smoothing: auto;
 }
 
-@media only screen and (max-width: 1300px) {
-  .content {
-    transform: translateX(-50%);
-  }
+.title-line-2 {
+  margin-bottom: 50px;
+  font-size: 30px;
 }
 
-@media only screen and (max-width: 1000px) {
-  .content {
-    transform: translateX(0);
-  }
-}
+
 
 .wrapper {
   width: 140px;
@@ -417,6 +420,7 @@ border: 1px solid #1ea394;
   position: absolute;
   top: 30px;
   right: 140px;
+  right: 7%;
   font-size: 45px;
   color: white;
   margin-top: 0px;
@@ -436,9 +440,37 @@ border: 1px solid #1ea394;
 
 }
 
-.rank-num {
+.page-title-mobile {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 22px;
+  color: white;
+  z-index: 99999999999999999999999999999;
+  padding: 20px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.title-line-1-mobile {
+  color: white;
+  z-index: 99999999999999999999999999999;
+  display: block;
+  font-size: 36px;
+  margin-bottom: 5px;
+}
+
+.title-line-2-mobile {
+  color: white;
+  font-size: 20px;
+}
+
+
+.rankNum {
   font-size: inherit;
   font-size: 66px;
+  min-width: 90px;
 }
 
 .the-rank {
@@ -478,20 +510,25 @@ border: 1px solid #1ea394;
   margin-left: 30px;
   background: white;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 52px;
+  height: 52px;
   background: #1ea394;
   background: #1ea3947a;
   box-shadow: 0px 0px 20px #ffffff8f;
   border: 1px solid white;
   border-style: dashed;
   background: #0d1117;
+  padding: 0;
+  transition: all 0.2s;
   /* background: linear-gradient(to top, #172b62b5, #02022aa8); */
   /* transform: translate(100px, 300px); */
 
   /* background: linear-gradient(to top, #172b62b5, #02022aa8);
   border: 2px solid #1ea394; */
 
+}
+button {
+  cursor: pointer;
 }
 
 .previous {
@@ -500,20 +537,31 @@ border: 1px solid #1ea394;
   margin-right: 30px;
   background: white;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 52px;
+  height: 52px;
   background: #1ea394;
   background: #1ea3947a;
   border: 1px solid white;
   box-shadow: 0px 0px 20px #ffffff8f;
   border-style: dashed;
   background: #0d1117;
+  padding: 0;
+  transition: all 0.2s;
+  /* -webkit-tap-highlight-color: #1ea3947a; */
+  
+  /* box-sizing: content-box; */
   /* background: linear-gradient(to top, #172b62b5, #02022aa8); */
   /* transform: translate(-100px, 300px); */
 
   /* background: linear-gradient(to top, #172b62b5, #02022aa8);
   border: 2px solid #1ea394; */
 
+}
+
+.previous:hover, .next:hover {
+  background: #1ea3947a;
+  background: #1ea394;
+  border-style: solid;
 }
 
 .d-flex {
@@ -609,4 +657,194 @@ li {
   z-index: 99999;
   /* background: white; */
   /* color: black; */
+}
+
+
+
+@media only screen and (max-width: 1400px) {
+
+  .content {
+    /* transform: translateX(-50%); */
+    transform: translateX(-75%) scale(0.75);
+    transform: translateX(-150%) scale(1.5);
+
+  }
+
+  .page-title {
+    /* font-size: 34px; */
+    right: 7%;
+  }
+
+
+}
+
+
+@media only screen and (max-width: 1250px) {
+  /* .content {
+    transform: translateX(-75%) scale(0.75);
+    transform: translateX(-150%) scale(1.5);
+  } */
+
+  .page-title {
+    font-size: 46px;
+    /* font-size: 34px; */
+    right: 7%;
+    /* right: 8%; */
+    line-height: 50px;
+  }
+
+  .rankNum {
+    font-size: 46px;
+  }
+
+  .title-line-2 {
+    font-size: 24px;
+  }
+
+  .title-line-2 {
+    margin-bottom: 20px;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  .content {
+    /* transform: translateX(0); */
+    transform: translateX(-65%) scale(0.65);
+    transform: translateX(-130%) scale(1.3);
+  }
+
+  .page-title {
+    font-size: 38px;
+    /* font-size: 34px; */
+    right: 6%;
+    /* right: 8%; */
+    line-height: 50px;
+  }
+
+  .title-line-2 {
+    font-size: 24px;
+  }
+
+  .title-line-2 {
+    margin-bottom: 20px;
+  }
+
+  .rankNum {
+    font-size: 38px;
+  }
+
+ 
+}
+
+
+@media only screen and (max-width: 992px) {
+  .content {
+    /* transform: translateX(0); */
+    transform: translateX(-60%) scale(0.65);
+    transform: translateX(-120%) scale(1.3);
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .content {
+    /* transform: translateX(0); */
+    transform: translateX(-0%) scale(0.9) translateY(25px);
+    transform: translateX(-0%) scale(1.8) translateY(50px);
+  }
+
+  .page-title-mobile { 
+
+    display: block;
+  }
+
+  .page-title {
+    left: 0;
+    width: 100%;
+    bottom: 20px;
+    top: auto;
+  }
+
+  .title-line-1,
+  .title-line-2 {
+    display: none;
+  }
+
+  .previous, .next {
+    border-style: solid;
+  }
+
+  .previous:hover, .next:hover {
+    /* background: #1ea3947a; */
+    background: black;
+   
+
+  }
+
+}
+
+@media only screen and (max-width: 576px) {
+  .content {
+    /* transform: translateX(0); */
+    transform: translateX(-12%) scale(1.2);
+    transform: translateX(-24%) scale(2.4);
+  }
+
+  .title-line-1-mobile {
+    color: white;
+    z-index: 99999999999999999999999999999;
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+  
+  .title-line-2-mobile {
+    color: white;
+    font-size: 14px;
+  }
+
+  
+
+  .page-title {
+    left: 0;
+    width: 100%;
+    bottom: 0px;
+    top: auto;
+  }
+
+  .next,
+  .previous {
+    width: 36px;
+    height: 36px;
+  }
+
+  .icon-previous,
+  .icon-next {
+    font-size: 13px;
+  }
+
+  .rankNum {
+    font-size: 22px;
+    min-width: 40px;
+  }
+
+ 
+
+
+
+  /* .previous:hover, .next:hover {
+    background: #1ea3947a;
+    background: black;
+    border-style: dashed;
+  } */
+
+  /* .previous:hover, .previous:active {
+    background: #1ea394;
+  } */
+
+  .canvas-container {
+    margin: auto;
+    max-height: 667px;
+  }
+
+
 }

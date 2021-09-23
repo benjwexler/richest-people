@@ -9,6 +9,8 @@ import { Html, enter, MeshWobbleMaterial, OrbitControls } from '@react-three/dre
 import { useSpring, useSprings, useSpringRef, useChain } from '@react-spring/three'
 import { a } from 'react-spring'
 import * as d3 from 'd3';
+import Div100vh from 'react-div-100vh'
+import useWindowSize from './hooks/useWindowSize';
 
 const CardInfo = ({
   imgSrc,
@@ -75,6 +77,16 @@ const positions = {
 
 
 const InnerApp = ({ count, setCount }) => {
+
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 576;
+  const camera = useThree((state) => state.camera)
+
+  useEffect(() => {
+    // console.log('camera', camera)
+    camera.position.y = isMobile ? 480 : 480
+    // camera.updateProjectionMatrix()
+  }, [isMobile])
 
 
   const ref = useRef()
@@ -266,7 +278,7 @@ const InnerApp = ({ count, setCount }) => {
           },
           {
             opacity: .2,
-            position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 9)),
+            position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 8)),
             rotation: [degrees_to_radians(-70), 0, 0],
           }
         ]
@@ -301,9 +313,11 @@ const InnerApp = ({ count, setCount }) => {
 
 
               className="content"
+              // zIndexRange={[10, 0]}
+              // style={{zIndex: 900}}
               // position={[0, 0, 0]} 
               position={[0, 0, 10.25]}
-              transform distanceFactor={400}>
+              transform distanceFactor={200}>
               <CardInfo
                 index
                 name={cards[i].name}
@@ -349,7 +363,8 @@ const InnerApp = ({ count, setCount }) => {
       <group
         // position={[-60, 150, 50]}
         // position={[0, 200, 50]}
-        position={[0, 180, 50]}
+        position={[0, isMobile ? 90 : 180, 50]}
+        // position={[0, 80, 50]}
       >
 
         {createCards(10, [0, -520, -100], [0, -60, -50])}
@@ -385,6 +400,10 @@ const InnerApp = ({ count, setCount }) => {
 
 function App() {
   // const [cameraPosition, setCameraPosition] = useState([-60, 450, 180])
+  // const [cameraPosition, setCameraPosition] = useState([-60, 480, 180])
+
+
+  // const cameraPosition = [-60, isMobile ? -380 : 480, 180]
   const [cameraPosition, setCameraPosition] = useState([-60, 480, 180])
   // const [cameraPosition, setCameraPosition] = useState([-60, 550, 180])
   const cameraRef = useRef();
@@ -395,6 +414,11 @@ function App() {
   const innerAppProps = { count, setCount }
 
   const [rankCoords, setRankCoords] = useState({ left: 0, top: 0 })
+  
+
+  
+
+  // console.log('windowSize', windowSize)
 
   const handleResize = () => {
     // return;
@@ -414,53 +438,48 @@ function App() {
     // console.log('dimensions', dimensions)
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      handleResize()
-    }, 100)
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     handleResize()
+  //   }, 100)
 
-    window.addEventListener('resize', handleResize);
-  }, [])
+  //   window.addEventListener('resize', handleResize);
+  // }, [])
 
-  useEffect(() => {
-    countRef.current = count;
-  }, [count])
+  // useEffect(() => {
+  //   countRef.current = count;
+  // }, [count])
 
 
   return (
-    <div className="App" style={{ height: '100vh', display: 'flex', transform: 'scale(1.0)' }}>
-      <div style={{ display: 'none' }} className="info-container">
-        {/* <div className="background"></div> */}
-        <h2 className="position-heading">CEO and Founder, Amazon</h2>
-        <ul className="list-info">
-          <li>
-            Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
-      </li>
-          <li>
-            Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
-      </li>
-          <li>
-            Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
-      </li>
-          <li>
-            Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
-      </li>
-          {/* <li>
-      Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
-      </li>
-      <li>
-      Jeff Bezos founded e-commerce giant Amazon in 1994 out of his garage in Seattle. He stepped down as CEO to become executive chairman on July 5, 2021.
-      </li> */}
-        </ul>
+    <Div100vh className="App" style={{ display: 'flex', transform: 'scale(1.0)' }}>
+
+<div className="page-title-mobile">
+      <div
+        className="title-line-1-mobile"
+      >
+        <span style={{ color: '#1ea394' }}>Top</span> 10 Richest People
+        </div>
+      <div
+        className="title-line-2-mobile"
+      >
+        <span style={{ colorz: '#1ea394' }}>Reimagined</span> by <span style={{ color: '#1ea394' }}>Ben Wexler</span>
       </div>
+
+      </div>
+
+
+
       <h1 className="page-title">
-        <div 
-        // style={{marginBottom: 50}}
-        ><span style={{color: '#1ea394'}}>Top</span> 10 Richest People</div>
         <div
-           style={{marginBottom: 50, fontSize: 30}}
+          className="title-line-1"
+        // style={{marginBottom: 50}}
+        ><span style={{ color: '#1ea394' }}>Top</span> 10 Richest People</div>
+        <div
+          className="title-line-2"
+        //  style={{marginBottom: 50, fontSize: 30}}
         >
-        <span style={{colorz: '#1ea394'}}>Reimagined</span> by <span style={{color: '#1ea394'}}>Ben Wexler</span></div>
+          <span style={{ colorz: '#1ea394' }}>Reimagined</span> by <span style={{ color: '#1ea394' }}>Ben Wexler</span></div>
         {/* <div> By Ben Wexler </div> */}
 
 
@@ -472,16 +491,20 @@ function App() {
 
           {/* <div> */}
           <div className="d-flex">
-            <div className="previous" onClick={() => setCount(prevVal => {
+            <button 
+            // ontouchstart=""
+            className="previous" onClick={() => setCount(prevVal => {
               const newVal = prevVal - 1;
               return newVal < 0 ? 9 : newVal
             })}>
               <i className="fas fa-arrow-left icon-previous"></i>
-            </div>
+            </button>
 
             <h1
-            className="rankNum"
-              style={{ margin: 0, minWidth: 90 }}
+              className="rankNum"
+              style={{ margin: 0, 
+              // minWidth: 90 
+              }}
             >{count + 1}
 
             </h1>
@@ -493,13 +516,13 @@ function App() {
           <div className="d-flex">
             <div className="m-auto next-prev-text">
             </div>
-            <div className="next" onClick={() => setCount(prevVal => {
+            <button className="next" onClick={() => setCount(prevVal => {
               const newVal = prevVal + 1;
               return newVal >= 10 ? 0 : newVal
             })}>
 
               <i className="fas fa-arrow-right icon-next"></i>
-            </div>
+            </button>
           </div>
 
         </div>
@@ -551,13 +574,14 @@ function App() {
       </div>
       <Canvas
         ref={cameraRef}
+        className="canvas-container"
         // camera={{ position: [-5, 450, 240], fov: 45, }}
         camera={{ position: cameraPosition, fov: 45, }}
       >
         <InnerApp {...innerAppProps} />
       </Canvas>
 
-    </div>
+    </Div100vh>
   );
 }
 
