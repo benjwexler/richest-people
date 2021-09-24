@@ -750,6 +750,7 @@ li {
     /* transform: translateX(0); */
     transform: translateX(-0%) scale(0.9) translateY(25px);
     transform: translateX(-0%) scale(1.8) translateY(50px);
+    transform: translateX(-25%) scale(1.8) translateY(20px);
   }
 
   .page-title-mobile { 
@@ -786,7 +787,7 @@ li {
   .content {
     /* transform: translateX(0); */
     transform: translateX(-12%) scale(1.2);
-    transform: translateX(-24%) scale(2.4);
+    transform: translateX(-25%) scale(2.4);
   }
 
   .title-line-1-mobile {
