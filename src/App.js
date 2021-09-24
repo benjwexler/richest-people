@@ -18,6 +18,7 @@ const CardInfo = ({
   networth,
   opacity,
   onClick,
+  hrefProfile,
   // imgSrc,
 }) => {
   return (
@@ -34,7 +35,7 @@ const CardInfo = ({
             </div>
 
             <div className="net-worth-amount">
-              $151 Billion
+              ${networth}
                 </div>
           </div>
 
@@ -49,7 +50,9 @@ const CardInfo = ({
               <div>{name}</div>
               {/* <div>Musk</div> */}
             </div>
-            <button className="btn-view-profile">Read Full Profile</button>
+            <button className="btn-view-profile">
+            <a href={hrefProfile} target="_blank">Read Full Profile</a>
+            </button>
 
           </div>
         </a.div>
@@ -205,16 +208,31 @@ const InnerApp = ({ count, setCount }) => {
     })
 
   const names = [
-    { name: 'Jeff Bezos', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5bb22ae84bbe6f67d2e82e05%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D627%26cropX2%3D1639%26cropY1%3D129%26cropY2%3D1142', networth: 1, },
-    { name: 'Elon Musk', imgSrc: "https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5f47d4de7637290765bce495%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D1699%26cropX2%3D3845%26cropY1%3D559%26cropY2%3D2704", networth: 1, },
-    { name: 'Bernard Arnault', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5dc05518ca425400079c659f%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4000%26cropY1%3D1209%26cropY2%3D5212', networth: 1, },
-    { name: 'Bill Gates', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5f4ebe0c87612dab4f12a597%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D292%26cropX2%3D3684%26cropY1%3D592%26cropY2%3D3987', networth: 1, },
-    { name: 'Mark Zuckerberg', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c76b7d331358e35dd2773a9%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4401%26cropY1%3D0%26cropY2%3D4401', networth: 1, },
-    { name: 'Warren Buffet', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5babb7f1a7ea4342a948b79a%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D748%26cropX2%3D3075%26cropY1%3D1753%26cropY2%3D4082', networth: 1, },
-    { name: 'Larry Ellison', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5e8b62cfc095010007bffea0%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4529%26cropY1%3D652%26cropY2%3D5184', networth: 1, },
-    { name: 'Larry Page', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c76bcaaa7ea43100043c836%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D227%26cropX2%3D2022%26cropY1%3D22%26cropY2%3D1817', networth: 1, },
-    { name: 'Sergey Brin', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c7d7c254bbe6f78090d831f%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D475%26cropX2%3D2887%26cropY1%3D168%26cropY2%3D2582', networth: 1, },
-    { name: 'Mukesh Ambani', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c7d7829a7ea434b351ba0b6%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D206%26cropX2%3D2043%26cropY1%3D250%26cropY2%3D2089', networth: 1, }
+    { 
+      name: 'Jeff Bezos',
+      imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5bb22ae84bbe6f67d2e82e05%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D627%26cropX2%3D1639%26cropY1%3D129%26cropY2%3D1142',
+      networth: '177 Billion',
+      hrefProfile: 'https://www.forbes.com/profile/jeff-bezos/?list=billionaires',
+    },
+    { name: 'Elon Musk', imgSrc: "https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5f47d4de7637290765bce495%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D1699%26cropX2%3D3845%26cropY1%3D559%26cropY2%3D2704", 
+    networth: '151 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/elon-musk/?list=billionaires',},
+    { name: 'Bernard Arnault', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5dc05518ca425400079c659f%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4000%26cropY1%3D1209%26cropY2%3D5212', networth: '150 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/bernard-arnault/?list=billionaires',},
+    { name: 'Bill Gates', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5f4ebe0c87612dab4f12a597%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D292%26cropX2%3D3684%26cropY1%3D592%26cropY2%3D3987', networth: '124 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/bill-gates/?list=billionaires',},
+    { name: 'Mark Zuckerberg', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c76b7d331358e35dd2773a9%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4401%26cropY1%3D0%26cropY2%3D4401', networth: '97 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/mark-zuckerberg/?list=billionaires',},
+    { name: 'Warren Buffet', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5babb7f1a7ea4342a948b79a%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D748%26cropX2%3D3075%26cropY1%3D1753%26cropY2%3D4082', networth: '96 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/warren-buffett/?list=billionaires',},
+    { name: 'Larry Ellison', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5e8b62cfc095010007bffea0%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D0%26cropX2%3D4529%26cropY1%3D652%26cropY2%3D5184', networth: '93 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/larry-ellison/?list=billionaires',},
+    { name: 'Larry Page', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c76bcaaa7ea43100043c836%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D227%26cropX2%3D2022%26cropY1%3D22%26cropY2%3D1817', networth: '91.5 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/larry-page?list=billionaires',},
+    { name: 'Sergey Brin', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c7d7c254bbe6f78090d831f%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D475%26cropX2%3D2887%26cropY1%3D168%26cropY2%3D2582', networth: '89 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/sergey-brin/?list=billionaires',},
+    { name: 'Mukesh Ambani', imgSrc: 'https://thumbor.forbes.com/thumbor/190x190/smart/filters:format(jpeg)/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5c7d7829a7ea434b351ba0b6%2F416x416.jpg%3Fbackground%3D000000%26cropX1%3D206%26cropX2%3D2043%26cropY1%3D250%26cropY2%3D2089', networth: '84.5 Billion', 
+    hrefProfile: 'https://www.forbes.com/profile/mukesh-ambani/?list=billionaires',}
 
   ]
 
@@ -299,7 +317,7 @@ const InnerApp = ({ count, setCount }) => {
     return (
       springs.map((spring, i) => {
         const { position, opacity, index } = spring;
-
+        const { name, imgSrc, networth, hrefProfile } = cards[i];
         return (
           <Box
             key={i}
@@ -320,8 +338,10 @@ const InnerApp = ({ count, setCount }) => {
               transform distanceFactor={200}>
               <CardInfo
                 index
-                name={cards[i].name}
-                imgSrc={cards[i].imgSrc}
+                name={name}
+                imgSrc={imgSrc}
+                networth={networth}
+                hrefProfile={hrefProfile}
                 // onClick={() => setCount(prevVal => {
                 //   const newVal = prevVal + 1;
                 //   return newVal >= cards.length ? 0 : newVal

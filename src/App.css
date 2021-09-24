@@ -347,6 +347,13 @@ border: 1px solid #1ea394;
 
 }
 
+.btn-view-profile a {
+
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+
+}
+
 .btn-view-profile:hover {
   background: black;
   color: white;
