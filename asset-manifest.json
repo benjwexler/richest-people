@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/richest-people/static/css/main.2a2aadea.chunk.css",
+    "main.js": "/richest-people/static/js/main.25cd20fe.chunk.js",
+    "main.js.map": "/richest-people/static/js/main.25cd20fe.chunk.js.map",
+    "runtime-main.js": "/richest-people/static/js/runtime-main.79bab0da.js",
+    "runtime-main.js.map": "/richest-people/static/js/runtime-main.79bab0da.js.map",
+    "static/js/2.877b24d5.chunk.js": "/richest-people/static/js/2.877b24d5.chunk.js",
+    "static/js/2.877b24d5.chunk.js.map": "/richest-people/static/js/2.877b24d5.chunk.js.map",
+    "static/js/3.2ba5a049.chunk.js": "/richest-people/static/js/3.2ba5a049.chunk.js",
+    "static/js/3.2ba5a049.chunk.js.map": "/richest-people/static/js/3.2ba5a049.chunk.js.map",
+    "index.html": "/richest-people/index.html",
+    "static/css/main.2a2aadea.chunk.css.map": "/richest-people/static/css/main.2a2aadea.chunk.css.map",
+    "static/js/2.877b24d5.chunk.js.LICENSE.txt": "/richest-people/static/js/2.877b24d5.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/richest-people/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.79bab0da.js",
+    "static/js/2.877b24d5.chunk.js",
+    "static/css/main.2a2aadea.chunk.css",
+    "static/js/main.25cd20fe.chunk.js"
+  ]
+}
