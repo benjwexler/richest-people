@@ -2,7 +2,7 @@
 import './App.css';
 import Box, { degrees_to_radians } from './Box';
 
-import React, { useRef, useState} from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Html } from '@react-three/drei';
 import { useSprings } from '@react-spring/three'
@@ -58,12 +58,13 @@ const CardInfo = ({
 
 const dimensions = [140, 90, 20.5];
 
-const InnerApp = ({ count }) => {
+const InnerApp = ({ count, userHasClicked }) => {
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 576;
   const ref = useRef()
   const offsetCoords = [0, -60, -50];
   const endPositionPart1 = [0, -1000, -350];
+  
 
   const cards = [
     {
@@ -114,6 +115,17 @@ const InnerApp = ({ count }) => {
 
   const originCoords = [0, 0, 0];
 
+  const lastCardAdditionalAnimations = [{
+    opacity: 0,
+    position: endPositionPart1,
+    rotation: [degrees_to_radians(-150), 0, 0],
+  },
+  {
+    opacity: .2,
+    position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 8)),
+    rotation: [degrees_to_radians(-70), 0, 0],
+  }]
+
   const springs = useSprings(
     cards.length,
     cards.map((item, i) => {
@@ -127,7 +139,8 @@ const InnerApp = ({ count }) => {
       return ({
         from: {
           opacity: 1,
-          position: originCoords.map((coord, j) => coord + (offsetCoords[j] * i)),
+          // position: originCoords.map((coord, j) => coord + (offsetCoords[j] * i)),
+          position: [0, 0, 0],
           rotation: [degrees_to_radians(-70), 0, 0],
           index,
         },
@@ -142,18 +155,9 @@ const InnerApp = ({ count }) => {
             }),
             index,
           },
-          {
-            opacity: 0,
-            position: endPositionPart1,
-            rotation: [degrees_to_radians(-150), 0, 0],
-          },
-          {
-            opacity: .2,
-            position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 8)),
-            rotation: [degrees_to_radians(-70), 0, 0],
-          }
+          ...lastCardAdditionalAnimations,
         ]
-          .slice(0, isLastCard ? cards.length : 1)
+          .slice(isLastCard && (!userHasClicked) ? lastCardAdditionalAnimations.length - 1 : 0, isLastCard ? lastCardAdditionalAnimations.length : 1)
         ,
 
         config: {
@@ -216,7 +220,9 @@ function App() {
   const cameraPosition = [-60, 480, 180];
   const cameraRef = useRef();
   const [count, setCount] = useState(0);
-  const innerAppProps = { count, setCount }
+  const [userHasClicked, setUserHasClicked] = useState(false);
+  const innerAppProps = { count, userHasClicked }
+  
 
   return (
     <Div100vh
@@ -248,10 +254,12 @@ function App() {
         <div style={{ display: 'flex' }} className="heading-rank2">
           <div className="d-flex">
             <button
-              className="previous" onClick={() => setCount(prevVal => {
+              className="previous" onClick={() => {
+                setUserHasClicked(true)
+                setCount(prevVal => {
                 const newVal = prevVal - 1;
                 return newVal < 0 ? 9 : newVal
-              })}>
+              })}}>
               <i className="fas fa-arrow-left icon-previous"></i>
             </button>
 
@@ -269,10 +277,12 @@ function App() {
           <div className="d-flex">
             <div className="m-auto next-prev-text">
             </div>
-            <button className="next" onClick={() => setCount(prevVal => {
+            <button className="next" onClick={() => {
+              setUserHasClicked(true)
+              setCount(prevVal => {
               const newVal = prevVal + 1;
               return newVal >= 10 ? 0 : newVal
-            })}>
+            })}}>
               <i className="fas fa-arrow-right icon-next"></i>
             </button>
           </div>
