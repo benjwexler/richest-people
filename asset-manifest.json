@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/richest-people/static/css/main.c62978db.chunk.css",
-    "main.js": "/richest-people/static/js/main.9a8b1abd.chunk.js",
-    "main.js.map": "/richest-people/static/js/main.9a8b1abd.chunk.js.map",
+    "main.css": "/richest-people/static/css/main.8a88e2eb.chunk.css",
+    "main.js": "/richest-people/static/js/main.922a7526.chunk.js",
+    "main.js.map": "/richest-people/static/js/main.922a7526.chunk.js.map",
     "runtime-main.js": "/richest-people/static/js/runtime-main.79bab0da.js",
     "runtime-main.js.map": "/richest-people/static/js/runtime-main.79bab0da.js.map",
-    "static/js/2.9f47cf1e.chunk.js": "/richest-people/static/js/2.9f47cf1e.chunk.js",
-    "static/js/2.9f47cf1e.chunk.js.map": "/richest-people/static/js/2.9f47cf1e.chunk.js.map",
+    "static/js/2.6b2d74b5.chunk.js": "/richest-people/static/js/2.6b2d74b5.chunk.js",
+    "static/js/2.6b2d74b5.chunk.js.map": "/richest-people/static/js/2.6b2d74b5.chunk.js.map",
     "static/js/3.2ba5a049.chunk.js": "/richest-people/static/js/3.2ba5a049.chunk.js",
     "static/js/3.2ba5a049.chunk.js.map": "/richest-people/static/js/3.2ba5a049.chunk.js.map",
     "index.html": "/richest-people/index.html",
-    "static/css/main.c62978db.chunk.css.map": "/richest-people/static/css/main.c62978db.chunk.css.map",
-    "static/js/2.9f47cf1e.chunk.js.LICENSE.txt": "/richest-people/static/js/2.9f47cf1e.chunk.js.LICENSE.txt"
+    "static/css/main.8a88e2eb.chunk.css.map": "/richest-people/static/css/main.8a88e2eb.chunk.css.map",
+    "static/js/2.6b2d74b5.chunk.js.LICENSE.txt": "/richest-people/static/js/2.6b2d74b5.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.79bab0da.js",
-    "static/js/2.9f47cf1e.chunk.js",
-    "static/css/main.c62978db.chunk.css",
-    "static/js/main.9a8b1abd.chunk.js"
+    "static/js/2.6b2d74b5.chunk.js",
+    "static/css/main.8a88e2eb.chunk.css",
+    "static/js/main.922a7526.chunk.js"
   ]
 }
