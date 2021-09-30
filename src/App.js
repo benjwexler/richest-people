@@ -58,13 +58,13 @@ const CardInfo = ({
 
 const dimensions = [140, 90, 20.5];
 
-const InnerApp = ({ count, userHasClicked }) => {
+const InnerApp = ({ count, userHasClicked, direction }) => {
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 576;
   const ref = useRef()
   const offsetCoords = [0, -60, -50];
   const endPositionPart1 = [0, -1000, -350];
-  
+
 
   const cards = [
     {
@@ -126,6 +126,22 @@ const InnerApp = ({ count, userHasClicked }) => {
     rotation: [degrees_to_radians(-70), 0, 0],
   }]
 
+  const lastCardAdditionalAnimationsReverse = [
+    {
+      opacity: .2,
+      position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 8)),
+      rotation: [degrees_to_radians(-70), 0, 0],
+    },
+    {
+    opacity: 1,
+    position: endPositionPart1,
+    rotation: [degrees_to_radians(-150), 0, 0],
+  },
+  ]
+
+
+  const [interpolater, setInterpolater] = useState(1);
+
   const springs = useSprings(
     cards.length,
     cards.map((item, i) => {
@@ -136,29 +152,35 @@ const InnerApp = ({ count, userHasClicked }) => {
       }
 
       const isLastCard = index === cards.length - 1;
+      const isReverse = direction === 'backwards';
+
+      const isAnimatedCard = (isLastCard && !isReverse) || (index === 0 && isReverse);
+        console.log('isReverse', isReverse)
+        console.log('isAnimatedCard', isAnimatedCard)
+      const from = {
+        opacity: 1,
+        // position: originCoords.map((coord, j) => coord + (offsetCoords[j] * i)),
+        position: [0, 0, 0],
+        rotation: [degrees_to_radians(-70), 0, 0],
+        index,
+      };
+
       return ({
-        from: {
-          opacity: 1,
-          // position: originCoords.map((coord, j) => coord + (offsetCoords[j] * i)),
-          position: [0, 0, 0],
-          rotation: [degrees_to_radians(-70), 0, 0],
-          index,
-        },
         to: [
+          ...(isReverse && isAnimatedCard ? lastCardAdditionalAnimationsReverse : []),
           {
-            rotation: [degrees_to_radians(isLastCard ? -100 : -70), 0, 0],
+            rotation: [degrees_to_radians(!isReverse && isLastCard ? -100 : -70), 0, 0],
             opacity: index === 0 ? 1 : 0.2,
-            position: isLastCard ? [0, -60, 50] : originCoords.map((coord, j) => {
+            position: !isReverse && isLastCard ? [0, -60, 50] : originCoords.map((coord, j) => {
               const offset = 0;
 
               return offset + coord + (offsetCoords[j] * index)
             }),
             index,
           },
-          ...lastCardAdditionalAnimations,
+          ...(!isReverse && isAnimatedCard ? lastCardAdditionalAnimations : []),
         ]
-          .slice(isLastCard && (!userHasClicked) ? lastCardAdditionalAnimations.length - 1 : 0, isLastCard ? lastCardAdditionalAnimations.length : 1)
-        ,
+        .slice(!userHasClicked ? -1 : 0),
 
         config: {
           duration: isLastCard ? 600 : 800,
@@ -219,10 +241,38 @@ const InnerApp = ({ count, userHasClicked }) => {
 function App() {
   const cameraPosition = [-60, 480, 180];
   const cameraRef = useRef();
-  const [count, setCount] = useState(0);
+  const ADD_COUNT = 'ADD_COUNT';
+  const SUB_COUNT = 'SUB_COUNT';
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case ADD_COUNT: {
+        const newCount = state.count + 1;
+        return ({
+          count: newCount >= 10 ? 0 : newCount,
+          direction: 'forwards'
+        });
+      };
+      case SUB_COUNT: {
+        const newCount = state.count - 1;
+        return ({
+          count: newCount < 0 ? 9 : newCount,
+          direction: 'backwards'
+        });
+      };
+      default: return state;
+    }
+  }
+
+  const [{ count, direction }, dispatch] = React.useReducer(reducer, { count: 0, direction: undefined });
+  const updateCountAdd = () => dispatch({ type: ADD_COUNT })
+  const updateCountSub = () => dispatch({ type: SUB_COUNT })
+
+
+  // const [_count, setCount] = useState(0);
   const [userHasClicked, setUserHasClicked] = useState(false);
-  const innerAppProps = { count, userHasClicked }
-  
+  const innerAppProps = { count, userHasClicked, direction }
+
 
   return (
     <Div100vh
@@ -256,10 +306,8 @@ function App() {
             <button
               className="previous" onClick={() => {
                 setUserHasClicked(true)
-                setCount(prevVal => {
-                const newVal = prevVal - 1;
-                return newVal < 0 ? 9 : newVal
-              })}}>
+                updateCountSub()
+              }}>
               <i className="fas fa-arrow-left icon-previous"></i>
             </button>
 
@@ -273,16 +321,14 @@ function App() {
             </h1>
             <div className="m-auto next-prev-text" />
           </div>
-    
+
           <div className="d-flex">
             <div className="m-auto next-prev-text">
             </div>
             <button className="next" onClick={() => {
               setUserHasClicked(true)
-              setCount(prevVal => {
-              const newVal = prevVal + 1;
-              return newVal >= 10 ? 0 : newVal
-            })}}>
+              updateCountAdd()
+            }}>
               <i className="fas fa-arrow-right icon-next"></i>
             </button>
           </div>
@@ -291,10 +337,12 @@ function App() {
       </h1>
       <div style={{ display: 'none', }} className="heading-rank2">
         <div className="d-flex">
-          <div className="previous" onClick={() => setCount(prevVal => {
-            const newVal = prevVal - 1;
-            return newVal < 0 ? 9 : newVal
-          })}>
+          <div className="previous"
+            onClick={() => {
+              setUserHasClicked(true)
+              updateCountSub()
+            }}
+          >
             <i className="fas fa-arrow-left icon-previous"></i>
           </div>
 
@@ -309,10 +357,12 @@ function App() {
         <div className="d-flex">
           <div className="m-auto next-prev-text">
           </div>
-          <div className="next" onClick={() => setCount(prevVal => {
-            const newVal = prevVal + 1;
-            return newVal >= 10 ? 0 : newVal
-          })}>
+          <div className="next"
+            onClick={() => {
+              setUserHasClicked(true)
+              updateCountAdd()
+            }}
+          >
 
             <i className="fas fa-arrow-right icon-next"></i>
           </div>
