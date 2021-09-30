@@ -10,7 +10,7 @@ export function degrees_to_radians(degrees) {
 export default function Box(props) {
 
   const { dimensions, myRef, rotation, children } = props;
-
+console.log('rotation', rotation )
   return (
     <a.mesh
       visible={false}

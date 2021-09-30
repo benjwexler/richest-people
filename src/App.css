@@ -72,6 +72,7 @@ body {
 
 .img-container {
   width: 50px;
+  min-height: 46px;
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid white;

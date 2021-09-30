@@ -2,7 +2,7 @@
 import './App.css';
 import Box, { degrees_to_radians } from './Box';
 
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Html } from '@react-three/drei';
 import { useSprings } from '@react-spring/three'
@@ -115,33 +115,6 @@ const InnerApp = ({ count, userHasClicked, direction }) => {
 
   const originCoords = [0, 0, 0];
 
-  const lastCardAdditionalAnimations = [{
-    opacity: 0,
-    position: endPositionPart1,
-    rotation: [degrees_to_radians(-150), 0, 0],
-  },
-  {
-    opacity: .2,
-    position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 8)),
-    rotation: [degrees_to_radians(-70), 0, 0],
-  }]
-
-  const lastCardAdditionalAnimationsReverse = [
-    {
-      opacity: .2,
-      position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 8)),
-      rotation: [degrees_to_radians(-70), 0, 0],
-    },
-    {
-    opacity: 1,
-    position: endPositionPart1,
-    rotation: [degrees_to_radians(-150), 0, 0],
-  },
-  ]
-
-
-  const [interpolater, setInterpolater] = useState(1);
-
   const springs = useSprings(
     cards.length,
     cards.map((item, i) => {
@@ -153,40 +126,71 @@ const InnerApp = ({ count, userHasClicked, direction }) => {
 
       const isLastCard = index === cards.length - 1;
       const isReverse = direction === 'backwards';
-
       const isAnimatedCard = (isLastCard && !isReverse) || (index === 0 && isReverse);
-        console.log('isReverse', isReverse)
-        console.log('isAnimatedCard', isAnimatedCard)
+
       const from = {
         opacity: 1,
-        // position: originCoords.map((coord, j) => coord + (offsetCoords[j] * i)),
         position: [0, 0, 0],
         rotation: [degrees_to_radians(-70), 0, 0],
-        index,
       };
 
+      const lastCardAdditionalAnimations = [{
+        opacity: 0,
+        position: endPositionPart1,
+        rotation: [degrees_to_radians(-150), 0, 0],
+        config: {
+          duration: 0,
+        },
+      },
+      {
+        opacity: .2,
+        position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 8)),
+        rotation: [degrees_to_radians(-70), 0, 0],
+        config: {
+          duration: 400,
+          easing: d3.easeBackOut.overshoot(.45)
+        },
+      }]
+
+      const lastCardAdditionalAnimationsReverse = [
+        {
+          opacity: 0,
+          position: offsetCoords.map((coord, i) => coord + (offsetCoords[i] * 8)),
+          rotation: [degrees_to_radians(-70), 0, 0],
+          config: {
+            duration: 0,
+            easing: undefined,
+          },
+        },
+        {
+          opacity: .2,
+          position: [0, -60, 50],
+          rotation: [degrees_to_radians(-100), 0, 0],
+          config: {
+            duration: 500,
+            easing: d3.easeQuadInOut,
+          },
+        },]
+
       return ({
+        from,
         to: [
           ...(isReverse && isAnimatedCard ? lastCardAdditionalAnimationsReverse : []),
           {
             rotation: [degrees_to_radians(!isReverse && isLastCard ? -100 : -70), 0, 0],
             opacity: index === 0 ? 1 : 0.2,
-            position: !isReverse && isLastCard ? [0, -60, 50] : originCoords.map((coord, j) => {
+            position: userHasClicked && !isReverse && isLastCard ? [0, -60, 50] : originCoords.map((coord, j) => {
               const offset = 0;
-
               return offset + coord + (offsetCoords[j] * index)
             }),
-            index,
+            config: {
+              duration: userHasClicked && isAnimatedCard ? isLastCard ? 400 : 300 : 800,
+              easing: userHasClicked && isLastCard ? d3.easeBackOut.overshoot(1) : d3.easeQuadInOut,
+            },
           },
-          ...(!isReverse && isAnimatedCard ? lastCardAdditionalAnimations : []),
+          ...(userHasClicked && !isReverse && isAnimatedCard ? lastCardAdditionalAnimations : []),
         ]
-        .slice(!userHasClicked ? -1 : 0),
-
-        config: {
-          duration: isLastCard ? 600 : 800,
-          easing: isLastCard ? d3.easeBackOut.overshoot(1) : d3.easeQuadInOut,
-        },
-
+          .slice(!userHasClicked ? -1 : 0),
       })
     })
   );
@@ -195,7 +199,7 @@ const InnerApp = ({ count, userHasClicked, direction }) => {
 
     return (
       springs.map((spring, i) => {
-        const { position, opacity, index } = spring;
+        const { position, opacity } = spring;
         const { name, imgSrc, networth, hrefProfile } = cards[i];
         return (
           <Box
@@ -222,6 +226,7 @@ const InnerApp = ({ count, userHasClicked, direction }) => {
       })
     )
   }
+
 
 
   return (
@@ -268,11 +273,8 @@ function App() {
   const updateCountAdd = () => dispatch({ type: ADD_COUNT })
   const updateCountSub = () => dispatch({ type: SUB_COUNT })
 
-
-  // const [_count, setCount] = useState(0);
   const [userHasClicked, setUserHasClicked] = useState(false);
   const innerAppProps = { count, userHasClicked, direction }
-
 
   return (
     <Div100vh
@@ -280,14 +282,10 @@ function App() {
       style={{ display: 'flex', transform: 'scale(1.0)' }}
     >
       <div className="page-title-mobile">
-        <div
-          className="title-line-1-mobile"
-        >
+        <div className="title-line-1-mobile">
           <span style={{ color: '#1ea394' }}>Top</span> 10 Richest People
         </div>
-        <div
-          className="title-line-2-mobile"
-        >
+        <div className="title-line-2-mobile">
           <span style={{ colorz: '#1ea394' }}>Reimagined</span> by <span style={{ color: '#1ea394' }}>Ben Wexler</span>
         </div>
       </div>
@@ -363,7 +361,6 @@ function App() {
               updateCountAdd()
             }}
           >
-
             <i className="fas fa-arrow-right icon-next"></i>
           </div>
         </div>
